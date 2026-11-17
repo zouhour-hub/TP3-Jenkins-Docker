@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        IMAGE = 'Zouhour/monapp'
+        IMAGE = 'zouhourzramdini/monapp'
         TAG = "build-${env.BUILD_NUMBER}"
     }
 
@@ -49,7 +49,9 @@ pipeline {
                         echo %PASS% | docker login -u %USER% --password-stdin
                         docker tag %IMAGE%:%TAG% %IMAGE%:latest
                         docker push %IMAGE%:%TAG%
+                        if errorlevel 1 exit /b 1
                         docker push %IMAGE%:latest
+                        if errorlevel 1 exit /b 1
                     '''
                 }
             }
